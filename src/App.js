@@ -1,97 +1,45 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Form from "./components/Form";
 
 function App() {
-  const [backspace, setBackspace] = useState(false);
+  let [code, setCode] = useState(Math.floor(Math.random() * 9000 + 1000));
+  let [codeValidation, setCodeValidation] = useState("");
 
-  const handleSubmission = () => {
-    console.log("Submitted");
-  };
-
-  const checkForBackspace = (e) => {
-    if (e.keyCode === 8 && !e.target.value) {
-      console.log("runs");
-      e.target.previousElementSibling.focus();
-    }
-  };
-
-  // Check inputs for backspace
-  useEffect(() => {
+  const handleSubmission = (e) => {
+    e.preventDefault();
     const inputElements = document.getElementsByClassName("inputNum");
+    const inputNums = [];
 
-    Array.from(inputElements).forEach((input, index) => {
-      if (index !== 0) {
-        input.addEventListener("keyup", checkForBackspace);
+    Array.from(inputElements).forEach((input) => {
+      if (input.value) {
+        inputNums.push(input.value);
       }
+
+      input.value = ""; //Reset all input values
     });
 
-    return () => {
-      window.removeEventListener("keyup", checkForBackspace);
-    };
-  }, []);
-
-  const handleOneDigitMax = (e) => {
-    if (e.target.value.length > 1) {
-      e.target.value = e.target.value[e.target.value.length - 1];
-    }
+    code === parseInt(inputNums.join(""))
+      ? resetInputs(inputElements)
+      : setCodeValidation("Invalid input. Please enter the correct code!");
   };
 
-  const handleFocusInputs = (e) => {
-    const submitBtn = document.getElementById("submit");
-    const regex = /[0-9]/;
-    if (e.target.value.match(regex)) {
-      e.target.nextElementSibling
-        ? e.target.nextElementSibling.focus()
-        : submitBtn.focus();
-    }
+  const resetCode = () => {
+    setCode(Math.floor(Math.random() * 9000 + 1000));
   };
 
-  const handleInput = (e) => {
-    // Replace existing number with new num input
-    handleOneDigitMax(e);
-
-    // Focus next element if necessary
-    handleFocusInputs(e);
+  const resetInputs = (inputs) => {
+    resetCode();
+    setCodeValidation("You have entered the correct code!");
   };
 
   return (
-    <form onSubmit={handleSubmission}>
-      <div>
-        <input
-          className="inputNum"
-          type="number"
-          min="0"
-          max="9"
-          maxLength="1"
-          onChange={(e) => handleInput(e)}
-        ></input>
-        <input
-          className="inputNum"
-          type="number"
-          min="0"
-          max="9"
-          maxLength="1"
-          onChange={(e) => handleInput(e)}
-        ></input>
-        <input
-          className="inputNum"
-          type="number"
-          min="0"
-          max="9"
-          maxLength="1"
-          onChange={(e) => handleInput(e)}
-        ></input>
-        <input
-          className="inputNum"
-          type="number"
-          min="0"
-          max="9"
-          maxLength="1"
-          onChange={(e) => handleInput(e)}
-        ></input>
-      </div>
-      <button id="submit">Submit</button>
-    </form>
+    <div>
+      <h1>Code Checker</h1>
+      <p>Your code is: {code}</p>
+      <Form handleSubmission={handleSubmission} code={code} />
+      {codeValidation && <span>{codeValidation}</span>}
+    </div>
   );
 }
 
