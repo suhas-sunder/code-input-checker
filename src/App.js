@@ -34,11 +34,11 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="wrapper">
       <h1>Code Checker</h1>
-      <p>Your code is: {code}</p>
+      <span className="text">Your code is: {code}</span>
       <Form handleSubmission={handleSubmission} code={code} />
-      {codeValidation && <span>{codeValidation}</span>}
+      {codeValidation && <span className="text">{codeValidation}</span>}
     </div>
   );
 }

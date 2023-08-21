@@ -1,6 +1,20 @@
-body {
-  background-color: black;
-  color: white;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.inputNum {
+  height: 2em;
+  width: 2em;
+  margin-bottom: 2em;
+  font-size: 1rem;
+  text-align: center;
 }
 
 .inputNum::-webkit-outer-spin-button,
@@ -11,4 +25,35 @@ body {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2em;
+}
+
+.inputs {
+  display: flex;
+  gap: 1em;
+}
+
+#submit {
+  background-color: rgb(43, 38, 38);
+  color: white;
+  border: 2px solid rgb(43, 38, 38);
+  border-radius: 5px;
+  padding: 0.5rem 1em;
+  margin-bottom: 2em;
+  font-size: 1.1rem;
+}
+
+#submit:hover {
+  background-color: white;
+  color: rgb(43, 38, 38);
+}
+
+.text {
+  font-size: 1.2rem;
 }

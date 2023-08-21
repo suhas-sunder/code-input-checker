@@ -50,7 +50,7 @@ function Form({ handleSubmission, code }) {
 
   return (
     <form onSubmit={handleSubmission}>
-      <div>
+      <div className="inputs">
         <input
           className="inputNum"
           type="number"
